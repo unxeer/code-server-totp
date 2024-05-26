@@ -10,6 +10,7 @@ import safeCompare from "safe-compare"
 import * as util from "util"
 import xdgBasedir from "xdg-basedir"
 import { vsRootPath } from "./constants"
+import * as OTPAuth from "otpauth"
 
 export interface Paths {
   data: string
@@ -234,10 +235,14 @@ export async function handlePasswordValidation({
 
   switch (passwordMethod) {
     case "PLAIN_TEXT": {
-      const isValid = passwordFromArgs ? safeCompare(passwordFromRequestBody, passwordFromArgs) : false
+      let totpValid = (passwordFromRequestBody :string, passwordFromArgs:string):boolean => {
+        const totpuri = "otpauth://totp/CS:MINE?issuer=CS&secret=" + passwordFromArgs + "&algorithm=SHA1&digits=6&period=30";
+        const totp = OTPAuth.URI.parse(totpuri);
+        return totp.validate({ token: passwordFromRequestBody }) === 0
+      }
+      const isValid = passwordFromArgs ? totpValid(passwordFromRequestBody, passwordFromArgs) : false
       passwordValidation.isPasswordValid = isValid
-
-      const hashedPassword = await hash(passwordFromRequestBody)
+      const hashedPassword = await hash(passwordFromArgs ? passwordFromArgs : "")
       passwordValidation.hashedPassword = hashedPassword
       break
     }
