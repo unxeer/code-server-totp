@@ -1,11 +1,12 @@
 ## Thanks
-    [coder/code-server](https://github.com/coder/code-server)
-    [linuxserver/docker-code-server](https://github.com/linuxserver/docker-code-server)
+[coder/code-server](https://github.com/coder/code-server)
+
+[linuxserver/docker-code-server](https://github.com/linuxserver/docker-code-server)
 
 ## Description
-    Use totp as password to login code-server. NOT 2fa (both password and totp).
+Use totp as password to login code-server. NOT 2fa (both password and totp).
 ## Note
-    linuxserver/code-server SHOULD use version 4.89.1
+linuxserver/code-server SHOULD use version 4.89.1
 ## Use
 ```sh
 wget patch.tar.gz
