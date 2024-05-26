@@ -20,8 +20,8 @@ docker run -dt --rm \
     -p 8443:8443 \
     -e DEFAULT_WORKSPACE=/config/workspace \
     -e PASSWORD=${TOTPSECRET} \
-    -e ~/patch/node_modules:/app/code-server/node_modules:ro \
-    -e ~/patch/out:/app/code-server/out:ro \
+    -v ~/patch/node_modules:/app/code-server/node_modules:ro \
+    -v ~/patch/out:/app/code-server/out:ro \
     linuxserver/code-server:4.89.1
 ```
 
